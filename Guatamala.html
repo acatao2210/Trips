@@ -29,134 +29,7 @@
     overflow-x: hidden;
   }
 
-  /* ─── PASSWORD GATE ─── */
-  #password-gate {
-    position: fixed;
-    inset: 0;
-    background: var(--jade);
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 40px 20px;
-  }
 
-  #password-gate .gate-pattern {
-    position: absolute;
-    inset: 0;
-    background-image:
-      repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 2px, transparent 2px, transparent 20px),
-      repeating-linear-gradient(-45deg, rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 2px, transparent 2px, transparent 20px);
-    pointer-events: none;
-  }
-
-  #password-gate .gate-border {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 8px;
-    background: repeating-linear-gradient(90deg,
-      var(--ochre) 0px, var(--ochre) 12px,
-      var(--ochre-light) 12px, var(--ochre-light) 24px,
-      var(--rust) 24px, var(--rust) 36px,
-      var(--ochre) 36px, var(--ochre) 48px);
-  }
-  #password-gate .gate-border-bottom {
-    top: auto; bottom: 0;
-  }
-
-  #password-gate h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    color: #fff;
-    font-weight: 700;
-    margin-bottom: 6px;
-    position: relative;
-  }
-
-  #password-gate h2 em {
-    display: block;
-    font-size: 0.5em;
-    font-weight: 400;
-    font-style: italic;
-    color: var(--ochre-light);
-    margin-bottom: 4px;
-  }
-
-  #password-gate p {
-    font-size: 0.78rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--jade-pale);
-    margin-bottom: 36px;
-    position: relative;
-  }
-
-  .gate-divider {
-    width: 48px;
-    height: 3px;
-    background: var(--ochre);
-    margin: 0 auto 32px;
-    position: relative;
-  }
-
-  #password-gate input {
-    background: rgba(255,255,255,.1);
-    border: 1px solid rgba(255,255,255,.25);
-    border-radius: 3px;
-    color: #fff;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 0.2em;
-    padding: 14px 24px;
-    text-align: center;
-    outline: none;
-    width: 220px;
-    transition: border-color 0.2s, background 0.2s;
-    position: relative;
-  }
-  #password-gate input::placeholder { color: rgba(255,255,255,.35); letter-spacing: 0.1em; }
-  #password-gate input:focus { border-color: var(--ochre); background: rgba(255,255,255,.15); }
-
-  #password-gate button {
-    display: block;
-    margin: 16px auto 0;
-    background: var(--ochre);
-    border: none;
-    border-radius: 3px;
-    color: #fff;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    padding: 14px 32px;
-    transition: background 0.2s, transform 0.15s;
-    position: relative;
-    width: 220px;
-  }
-  #password-gate button:hover { background: var(--ochre-light); transform: translateY(-1px); }
-
-  #gate-error {
-    color: #ffb3a0;
-    font-size: 0.78rem;
-    letter-spacing: 0.1em;
-    margin-top: 14px;
-    min-height: 1.2em;
-    position: relative;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  #gate-error.show { opacity: 1; }
-
-  #password-gate.fade-out {
-    animation: gateOut 0.5s ease forwards;
-  }
-  @keyframes gateOut {
-    to { opacity: 0; transform: scale(1.03); pointer-events: none; }
-  }
 
   /* ─── HEADER ─── */
   header {
@@ -631,21 +504,6 @@
 </head>
 <body>
 
-<!-- PASSWORD GATE -->
-<div id="password-gate">
-  <div class="gate-pattern"></div>
-  <div class="gate-border"></div>
-  <div class="gate-border gate-border-bottom"></div>
-  <h2>
-    <em>Private Itinerary</em>
-    Guatemala
-  </h2>
-  <div class="gate-divider"></div>
-  <p>Anita &amp; Jose · April 2026</p>
-  <input type="password" id="gate-input" placeholder="Enter password" autocomplete="off" />
-  <button onclick="checkPassword()">Enter</button>
-  <div id="gate-error">Incorrect password. Try again.</div>
-</div>
 
 <!-- ─── HEADER ─── -->
 <header>
@@ -1171,29 +1029,6 @@
 </footer>
 
 <script>
-  // Password gate
-  function checkPassword() {
-    const input = document.getElementById('gate-input').value;
-    const error = document.getElementById('gate-error');
-    if (input === 'Catao') {
-      const gate = document.getElementById('password-gate');
-      gate.classList.add('fade-out');
-      setTimeout(() => gate.remove(), 500);
-    } else {
-      error.classList.add('show');
-      document.getElementById('gate-input').value = '';
-      document.getElementById('gate-input').focus();
-      setTimeout(() => error.classList.remove('show'), 2500);
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('gate-input').addEventListener('keydown', e => {
-      if (e.key === 'Enter') checkPassword();
-    });
-    document.getElementById('gate-input').focus();
-  });
-
   // Scroll-based fade-in for day cards
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
